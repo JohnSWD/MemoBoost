@@ -10,11 +10,11 @@ namespace MemoBoost.Logic
     {
         public int ID { get; set; }
 
-        public Deck Deck { get; set; }
+        public int DID { get; set; } //get stackoverflow exception when try to use Deck
 
-        public int State { get; set; } //new,learning or studying
+        public int State { get; set; } //new-0,learning-1 or studying-2
 
-        public DateTime Next { get; set; } //date when the card will be shown
+        public DateTime Next { get; set; } //the date when the card will be shown
 
         public double EF { get; set; } //easines factor (calculated via a function), (1.3,2.5); 2.5 - default value
 
@@ -26,10 +26,6 @@ namespace MemoBoost.Logic
 
         public string Answer { get; set; }
 
-        public Card()
-        {
-            EF = 2.5;
-            Steps = 2;
-        }
+     
     }
 }

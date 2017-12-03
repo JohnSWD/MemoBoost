@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
         <TextBlock Margin="10">Search</TextBlock>
         <TextBox Margin="60 10 10 10"></TextBox>
-        <ListBox Name="DecksListBox" Margin="10 10 10 10" Grid.Row="1" HorizontalContentAlignment="Stretch">
+        <ListBox Name="decksListBox" Margin="10 10 10 10" Grid.Row="1" HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Border CornerRadius="3">
@@ -31,21 +31,22 @@
                                         <TextBlock Text="{Binding Path=Name}"></TextBlock>
                                     </Hyperlink>
                             </TextBlock>
-                            
+
                             <StackPanel Grid.Column="1">
                                 <TextBlock Text="{Binding Path=NewCard, StringFormat='New: {0}'}"></TextBlock>
                                 <TextBlock Text="{Binding Path=LrnCards, StringFormat='Learn: {0}'}"></TextBlock>
                                 <TextBlock Text="{Binding Path=RevCards, StringFormat='Review: {0}'}"></TextBlock>
                             </StackPanel>
-                            <Button Tag="{Binding}" Name="manageButton" Grid.Column="2" Content="Manage"></Button>
+                            <Button Tag="{Binding Path=ID}" Name="manageButton" Grid.Column="2" Content="Manage" Click="ManageButton_Click"></Button>
                         </Grid>
                     </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5">
-            <Button Name="NDButton" Margin="5 0 0 0"  Content="New deck"/>
-            <Button Name="NCButton" Margin="10 0 0 0" Content="New card"/>
+            <Button Name="NDButton" Margin="5 0 0 0"  Content="New deck" Click="NDButton_Click"/>
+            <Button Name="NCButton" Margin="10 0 0 0" Content="New card" Click="NCButton_Click"/>
+            <Button Name="DelButton" Content="Delete the deck" Margin="30 0 0 0 " Click="DelButton_Click"/>
         </StackPanel>
     </Grid>
 </Page>

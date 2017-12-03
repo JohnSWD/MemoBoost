@@ -21,10 +21,43 @@ namespace MemoBoost.UI
     public partial class HomePage : Page
     {
         
-        public HomePage()
+        public HomePage() //is it possible to change objects in list if i use propertuchanged event?  
         {
             InitializeComponent();
-            DecksListBox.ItemsSource = Factory.Default.GetDecksRepository().Items;
+            decksListBox.ItemsSource = Factory.Default.GetDecksRepository().Items;
+        }
+
+        private void DelButton_Click(object sender, RoutedEventArgs e) //a better way to delete cards?
+        {
+            var v = (Deck)decksListBox.SelectedItem;
+            if (v!=null)
+            {
+                foreach(var i in v.Cards)
+                {
+                    Factory.Default.GetCardsRepository().Delete(i);
+                }
+                Factory.Default.GetDecksRepository().Delete(v);
+            }
+        }
+
+        private void NCButton_Click(object sender, RoutedEventArgs e)
+        {
+            NCrdWin ncw = new NCrdWin();
+            ncw.Show();
+        }
+
+        private void NDButton_Click(object sender, RoutedEventArgs e)
+        {
+            NDckWin ndw = new NDckWin();
+            ndw.Show();
+        }
+
+        private void ManageButton_Click(object sender, RoutedEventArgs e)
+        {
+            var b = (Button)sender;
+            DMngrWin dmw = new DMngrWin(); 
+            dmw.theid = (int)b.Tag;//questionable
+            dmw.Show();
         }
     }
 }

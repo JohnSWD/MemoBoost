@@ -65,8 +65,17 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DMngrWin.xaml.cs">
+      <DependentUpon>DMngrWin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NCrdWin.xaml.cs">
+      <DependentUpon>NCrdWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NDckWin.xaml.cs">
+      <DependentUpon>NDckWin.xaml</DependentUpon>
     </Compile>
     <Compile Include="StartWin.xaml.cs">
       <DependentUpon>StartWin.xaml</DependentUpon>
@@ -103,7 +112,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="DMngrWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NCrdWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NDckWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

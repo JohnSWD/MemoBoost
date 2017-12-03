@@ -14,15 +14,15 @@ namespace MemoBoost.Logic
             {
                 new Deck
                 {
-                    ID=1, Name="Default", Cards=new List<Card>()
+                    ID=1, Name="Default"
                 },
                 new Deck
                 {
-                    ID=2, Name="Default2", Cards=null
+                    ID=2, Name="Default2"
                 },
                 new Deck
                 {
-                    ID=3, Name="Default3", Cards=null
+                    ID=3, Name="Default3"
                 }
             };
         }
