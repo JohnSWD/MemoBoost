@@ -1,0 +1,51 @@
+﻿<Page x:Class="MemoBoost.UI.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MemoBoost.UI"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="HomePage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <TextBlock Margin="10">Search</TextBlock>
+        <TextBox Margin="60 10 10 10"></TextBox>
+        <ListBox Name="DecksListBox" Margin="10 10 10 10" Grid.Row="1" HorizontalContentAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border CornerRadius="3">
+                        <Grid Margin="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock>
+                                    <Hyperlink>
+                                        <TextBlock Text="{Binding Path=Name}"></TextBlock>
+                                    </Hyperlink>
+                            </TextBlock>
+                            
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="{Binding Path=NewCard, StringFormat='New: {0}'}"></TextBlock>
+                                <TextBlock Text="{Binding Path=LrnCards, StringFormat='Learn: {0}'}"></TextBlock>
+                                <TextBlock Text="{Binding Path=RevCards, StringFormat='Review: {0}'}"></TextBlock>
+                            </StackPanel>
+                            <Button Tag="{Binding}" Name="manageButton" Grid.Column="2" Content="Manage"></Button>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5">
+            <Button Name="NDButton" Margin="5 0 0 0"  Content="New deck"/>
+            <Button Name="NCButton" Margin="10 0 0 0" Content="New card"/>
+        </StackPanel>
+    </Grid>
+</Page>
