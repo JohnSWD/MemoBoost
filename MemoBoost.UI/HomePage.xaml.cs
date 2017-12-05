@@ -24,10 +24,17 @@ namespace MemoBoost.UI
         public HomePage() //is it possible to change objects in list if i use propertuchanged event?  
         {
             InitializeComponent();
-            decksListBox.ItemsSource = Factory.Default.GetDecksRepository().Items;
+            decksListBox.ItemsSource = Factory.Default.GetDecksRepository().Where(d => d.Cards.Count >=0); //is there a better way? may be turning off lazy loading?
         }
 
-        private void DelButton_Click(object sender, RoutedEventArgs e) //a better way to delete cards?
+        private void Update()
+        {
+            decksListBox.ItemsSource = null;
+            decksListBox.ItemsSource = Factory.Default.GetDecksRepository().Where(d=>d.Cards.Count>=0);
+        }
+
+
+        private void DelButton_Click(object sender, RoutedEventArgs e) //doesnt work(problem with foeach (collection was changed????))
         {
             var v = (Deck)decksListBox.SelectedItem;
             if (v!=null)
@@ -43,20 +50,23 @@ namespace MemoBoost.UI
         private void NCButton_Click(object sender, RoutedEventArgs e)
         {
             NCrdWin ncw = new NCrdWin();
-            ncw.Show();
+            if (ncw.ShowDialog().Value)
+                Update();
         }
 
         private void NDButton_Click(object sender, RoutedEventArgs e)
         {
             NDckWin ndw = new NDckWin();
-            ndw.Show();
+            if (ndw.ShowDialog().Value)
+                Update();
         }
 
         private void ManageButton_Click(object sender, RoutedEventArgs e)
         {
             var b = (Button)sender;
-            DMngrWin dmw = new DMngrWin(); 
-            dmw.theid = (int)b.Tag;//questionable
+            DMngrWin dmw = new DMngrWin();
+            dmw.OnIdReceived?.Invoke((int)b.Tag);
+            dmw.OnActionCompleted += Update;
             dmw.Show();
         }
     }

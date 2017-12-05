@@ -18,7 +18,7 @@
         <TextBox Name="answrBox"  Grid.Row="1" Margin="5 20 5 10"/>
         <WrapPanel Grid.Row="2" HorizontalAlignment="Right" Margin="5">
             <ComboBox Name="decksCBox" Width="150" DisplayMemberPath="Name" />
-            <Button Content="Add"  Width="70" Margin="10 0 0 0"></Button>
+            <Button Name="addButton" Content="Add"  Width="70" Margin="10 0 0 0" Click="AddButton_Click"></Button>
         </WrapPanel>
     </Grid>
 </Window>

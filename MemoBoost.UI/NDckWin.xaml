@@ -6,14 +6,14 @@
         xmlns:local="clr-namespace:MemoBoost.UI"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="NDckWin" Height="100" Width="400">
+        Title="NDckWin" Height="110" Width="400">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition/>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <TextBlock Text="Name: " Margin="10" VerticalAlignment="Center"/>
         <TextBox Name="nameBox" Margin="50 0 10 0" VerticalAlignment="Center"/>
-        <Button Name="okButton" Content="Ok" Grid.Row="1" HorizontalAlignment="Right" Margin="0 2 10 2" Width="60"/>
+        <Button Name="okButton" Content="Ok" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Height="20" Margin="0 2 10 2" Width="60" Click="OkButton_Click"/>
     </Grid>
 </Window>

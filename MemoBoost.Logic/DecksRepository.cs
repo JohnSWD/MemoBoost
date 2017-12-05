@@ -10,21 +10,7 @@ namespace MemoBoost.Logic
     {
         public DecksRepository()
         {
-            _items = new List<Deck>
-            {
-                new Deck
-                {
-                    ID=1, Name="Default"
-                },
-                new Deck
-                {
-                    ID=2, Name="Default2"
-                },
-                new Deck
-                {
-                    ID=3, Name="Default3"
-                }
-            };
+            
         }
     }
 }

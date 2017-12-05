@@ -1,37 +1,63 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MemoBoost.Logic
 {
-    public class Repository<T>
+   public abstract class Repository<TEntity> where TEntity: class
     {
-        protected List<T> _items;
+        protected IEnumerable<TEntity> _items;
 
-        public IEnumerable<T> Items
+        public IEnumerable<TEntity> Items
         {
             get
             {
-                return _items; 
+                using (Context context = new Context())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+                    return _items=context.Set<TEntity>().ToList();
+                }
             }
         }
 
-        public void Add(T item)
+        public virtual void Add(TEntity item)
         {
-            _items.Add(item);
+            using (var context = new Context())
+            {
+                context.Entry(item).State = EntityState.Added;
+                context.SaveChanges();
+            }
         }
 
-        public void Delete(T item)
+        public virtual void Delete(TEntity item)
         {
-            _items.Remove(item);
+            using (var context = new Context())
+            {
+                context.Entry(item).State = EntityState.Deleted;
+                context.SaveChanges();
+            }
         }
 
-        public void Change(T item)
+        public virtual void ChangeItem(TEntity item)
         {
-            //some code
+            using (var context = new Context())
+            {
+                context.Entry(item).State = EntityState.Modified;
+                context.SaveChanges();
+            }
         }
 
+        public IEnumerable<TEntity> Where(Func<TEntity, bool> predicate)
+        {
+            using (Context context = new Context())
+            {
+                var list = context.Set<TEntity>().ToList();
+                list = list.Where(predicate).ToList();
+                return list;
+            }
+        }
     }
 }
