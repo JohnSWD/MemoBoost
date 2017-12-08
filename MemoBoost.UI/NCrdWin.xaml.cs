@@ -18,7 +18,8 @@ namespace MemoBoost.UI
     /// <summary>
     /// Логика взаимодействия для NCrdWin.xaml
     /// </summary>
-    public partial class NCrdWin : Window
+    public partial class NCrdWin : Window//partly completed, adding images to question/answer to be implemented
+        //cards type (basic, reverse, picture->answer, fill in the gaps?)
     {
         public NCrdWin()
         {
@@ -27,7 +28,7 @@ namespace MemoBoost.UI
         }
         
 
-        private void AddButton_Click(object sender, RoutedEventArgs e)
+        private void AddButton_Click(object sender, RoutedEventArgs e)//checked
         {
             if (decksCBox.SelectedIndex != -1)
             {

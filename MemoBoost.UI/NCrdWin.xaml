@@ -13,9 +13,9 @@
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <TextBlock Text="Question" Margin="5"/>
-        <TextBox Name ="qstnBox" Margin="5 20 5 10"/>
+        <TextBox TextWrapping="Wrap" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Name ="qstnBox" Margin="5 20 5 10"/>
         <TextBlock Grid.Row="1" Text="Answer" Margin="5"/>
-        <TextBox Name="answrBox"  Grid.Row="1" Margin="5 20 5 10"/>
+        <TextBox TextWrapping="Wrap" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Name="answrBox"  Grid.Row="1" Margin="5 20 5 10"/>
         <WrapPanel Grid.Row="2" HorizontalAlignment="Right" Margin="5">
             <ComboBox Name="decksCBox" Width="150" DisplayMemberPath="Name" />
             <Button Name="addButton" Content="Add"  Width="70" Margin="10 0 0 0" Click="AddButton_Click"></Button>

@@ -52,16 +52,7 @@ namespace MemoBoost.Logic
 
         public List<Card> CardsToReview() //cards with reviewing state(1)
         {
-            List<Card> toReview = new List<Card>();
-            foreach (var i in Cards)
-            {
-                if (i.Next >= DateTime.Now)
-                {
-                    toReview.Add(i);
-                    //need to calculate date difference here for SRS algorithm
-                }
-            }
-            return toReview;
+            return Cards.Where(i => i.State == 2).ToList();
         }
 
         public List<Card> NewCards() //new cards which havent been learnt (0)
@@ -71,7 +62,7 @@ namespace MemoBoost.Logic
 
         public List<Card> CardsToLearn() //cards with learning state (3)
         {
-            return Cards.Where(i => i.State == 2).ToList();
+            return Cards.Where(i => i.State == 1).ToList();
         }
     }
 }

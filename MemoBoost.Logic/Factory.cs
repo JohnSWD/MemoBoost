@@ -11,6 +11,7 @@ namespace MemoBoost.Logic
         private static Factory _default;
         private Repository<Card> _cardsrep = new CardsRepository();
         private Repository<Deck> _decksrep = new DecksRepository();
+      
 
         public static Factory Default
         {
@@ -34,5 +35,6 @@ namespace MemoBoost.Logic
             return _decksrep;
         }
 
+        
     }
 }

@@ -18,7 +18,7 @@ namespace MemoBoost.UI
     /// <summary>
     /// Логика взаимодействия для NDckWin.xaml
     /// </summary>
-    public partial class NDckWin : Window
+    public partial class NDckWin : Window //deck will be connected to a certain user
     {
         public NDckWin()
         {

@@ -23,6 +23,7 @@ namespace MemoBoost.UI
         public StartWin()
         {
             InitializeComponent();
+            Main.Content = new HomePage();
         }
 
         private void Hyperlink_Click(object sender, RoutedEventArgs e)

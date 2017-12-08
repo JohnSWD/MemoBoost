@@ -18,10 +18,10 @@ namespace MemoBoost.UI
     /// <summary>
     /// Логика взаимодействия для HomePage.xaml
     /// </summary>
-    public partial class HomePage : Page
+    public partial class HomePage : Page //completed
     {
         
-        public HomePage() //is it possible to change objects in list if i use propertuchanged event?  
+        public HomePage() //use navigation service loaded to dispose of study session!!!!!!!!!!!
         {
             InitializeComponent();
             decksListBox.ItemsSource = Factory.Default.GetDecksRepository().Where(d => d.Cards.Count >=0); //is there a better way? may be turning off lazy loading?
@@ -34,40 +34,49 @@ namespace MemoBoost.UI
         }
 
 
-        private void DelButton_Click(object sender, RoutedEventArgs e) //doesnt work(problem with foeach (collection was changed????))
+        private void DelButton_Click(object sender, RoutedEventArgs e)//checked
         {
             var v = (Deck)decksListBox.SelectedItem;
             if (v!=null)
             {
-                foreach(var i in v.Cards)
-                {
-                    Factory.Default.GetCardsRepository().Delete(i);
-                }
+                Factory.Default.GetCardsRepository().DeleteRange(Factory.Default.GetCardsRepository().Where(c => c.DeckID == v.ID));
+                v.Cards = null;
+                Factory.Default.GetDecksRepository().ChangeItem(v);
                 Factory.Default.GetDecksRepository().Delete(v);
             }
         }
 
-        private void NCButton_Click(object sender, RoutedEventArgs e)
+        private void NCButton_Click(object sender, RoutedEventArgs e)//checked
         {
             NCrdWin ncw = new NCrdWin();
             if (ncw.ShowDialog().Value)
                 Update();
         }
 
-        private void NDButton_Click(object sender, RoutedEventArgs e)
+        private void NDButton_Click(object sender, RoutedEventArgs e)//checked
         {
             NDckWin ndw = new NDckWin();
             if (ndw.ShowDialog().Value)
                 Update();
         }
 
-        private void ManageButton_Click(object sender, RoutedEventArgs e)
+        private void ManageButton_Click(object sender, RoutedEventArgs e)//checked
         {
             var b = (Button)sender;
             DMngrWin dmw = new DMngrWin();
             dmw.OnIdReceived?.Invoke((int)b.Tag);
             dmw.OnActionCompleted += Update;
             dmw.Show();
+        }
+
+        private void ToStudy_Click(object sender, RoutedEventArgs e)//check for cards to learn
+        {
+            var hl = (Hyperlink)sender;
+            var d = (Deck)hl.Tag;
+            StudySession.Default.CurrentSession = d.Cards.ToList();
+            StudyPage sp = new StudyPage();   
+            //sp.GetDeck?.Invoke(d);
+            this.NavigationService.Navigate(sp);
         }
     }
 }

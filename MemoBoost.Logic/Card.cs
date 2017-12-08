@@ -20,12 +20,14 @@ namespace MemoBoost.Logic
 
         public double EF { get; set; } = 2.5; //easines factor (calculated via a function), (1.3,2.5); 2.5 - default value
 
-        public int Steps { get; set; } = 2;//the number of steps to get to studying state [0;2]
+        public int Steps { get; set; } = 0;//the number of steps to get to studying state [0;2]
 
-        public int Interval { get; set; } = 0;//function of EF and number of studying days
+        public int Interval { get; set; } = 1;//function of EF and number of studying days
 
         public string Question { get; set; }
 
-        public string Answer { get; set; }  
+        public string Answer { get; set; }
     }
 }
+    
+

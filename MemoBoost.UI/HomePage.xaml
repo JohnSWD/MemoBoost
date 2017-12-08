@@ -27,7 +27,7 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <TextBlock>
-                                    <Hyperlink>
+                                    <Hyperlink Name="ToStudy" Tag="{Binding}" Click="ToStudy_Click">
                                         <TextBlock Text="{Binding Path=Name}"></TextBlock>
                                     </Hyperlink>
                             </TextBlock>

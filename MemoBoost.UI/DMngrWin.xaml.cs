@@ -20,30 +20,37 @@ namespace MemoBoost.UI
     /// <summary>
     /// Логика взаимодействия для DMngrWin.xaml
     /// </summary>
-    public partial class DMngrWin : Window
+    public partial class DMngrWin : Window //disable drop availability when there is no selecteditem
     {
         public GetIdCallback OnIdReceived;
         public ParallelUpdate OnActionCompleted;
         private int _theid;
+        private Card _currentCard;
         public DMngrWin()
         {
             InitializeComponent();
             OnIdReceived += GetId;
             OnActionCompleted += ToInitialState;
+            //answrBox.AddHandler(TextBox.DropEvent, new DragEventHandler(AnswrBox_Drop), true);
+            //answrBox.Drop += AnswrBox_Drop;
+            //answrBox.PreviewDragOver += AnswrBox_PreviewDragOver;
         }
 
         private void ToInitialState()
         {
             qstnBox.Clear();
-            qstnBox.Focusable = false;
             answrBox.Clear();
-            answrBox.Focusable = false;
-            deckBox.Focusable = false;
             cardsListBox.SelectedIndex = -1;
             DataContext = null;
-            saveButton.IsEnabled = false;
-            changeButton.IsEnabled = true;
+            ToPartlyIntialState();
+        }
 
+        private void ToPartlyIntialState()
+        {
+            qstnBox.Focusable = false;
+            answrBox.Focusable = false;
+            //deckBox.Focusable = false;
+            changeButton.IsEnabled = true;
         }
 
         private void GetId(int id)
@@ -56,13 +63,6 @@ namespace MemoBoost.UI
         {
             cardsListBox.ItemsSource = Factory.Default.GetDecksRepository().Where(d => d.Cards.Count >= 0).Where(d=>d.ID==_theid).ToList()[0].Cards;
             OnActionCompleted?.Invoke();
-        }
-
-
-
-        private void SaveButton_Click(object sender, RoutedEventArgs e) //more convenient way to change? (use events to track changes?)
-        {
-            //if (deckBox.Text != )
         }
 
         private void DelButton_Click(object sender, RoutedEventArgs e)
@@ -78,18 +78,51 @@ namespace MemoBoost.UI
 
         private void CardsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            ToPartlyIntialState();
             var c = (Card)cardsListBox.SelectedItem;
             if (c != null)
+            {
                 DataContext = c;
+                _currentCard = c;
+            }
+                
         }
 
         private void ChangeButton_Click(object sender, RoutedEventArgs e)
         {
             qstnBox.Focusable = true;
             answrBox.Focusable = true;
-            deckBox.Focusable = true;
+            //deckBox.Focusable = true;
             changeButton.IsEnabled = false;
-            saveButton.IsEnabled = true;
+        }
+
+        private void TextBoxLostFocus(object sender, RoutedEventArgs e)//is it ok
+        {
+            _currentCard.Question = qstnBox.Text;
+            _currentCard.Answer = answrBox.Text;
+            Factory.Default.GetCardsRepository().ChangeItem(_currentCard);
+        }
+
+        private void AnswrBox_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                var file = files[0];
+                var s = (TextBox)sender;
+                MediaManager.Copy(file);
+                s.Focus();
+                //consturct string with question+image name
+                
+                //var df = DataFormats.Bitmap;
+
+                
+            }
+        }
+
+        private void AnswrBox_PreviewDragOver(object sender, DragEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }
