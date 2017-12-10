@@ -21,7 +21,7 @@ namespace MemoBoost.Logic
             get
             {
                 if(Cards!=null)
-                    return this.CardsToReview().Count;
+                    return this.StateCount(2).Count;
                 else
                     return 0;
             } 
@@ -32,7 +32,7 @@ namespace MemoBoost.Logic
             get
             {
                 if (Cards!= null)
-                    return this.NewCards().Count;
+                    return this.StateCount(0).Count;
                 else
                     return 0;
             }
@@ -42,27 +42,15 @@ namespace MemoBoost.Logic
             get
             {
                 if (Cards!= null)
-                    return this.CardsToLearn().Count;
+                    return this.StateCount(1).Count;
                 else
                     return 0;
             }
         }
 
-
-
-        public List<Card> CardsToReview() //cards with reviewing state(1)
+        public ICollection<Card> StateCount(int state)
         {
-            return Cards.Where(i => i.State == 2).ToList();
-        }
-
-        public List<Card> NewCards() //new cards which havent been learnt (0)
-        {
-            return Cards.Where(i => i.State == 0).ToList();
-        }
-
-        public List<Card> CardsToLearn() //cards with learning state (3)
-        {
-            return Cards.Where(i => i.State == 1).ToList();
+            return Cards.Where(i => i.State == state).Where(i=>i.Next<=DateTime.Now).ToList();
         }
     }
 }

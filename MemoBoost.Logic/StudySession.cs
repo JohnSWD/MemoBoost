@@ -10,6 +10,8 @@ namespace MemoBoost.Logic
     {
         private static StudySession _default;
         private List<Card> _currentSession;
+        public Deck CurrentDeck { get; set; }
+
 
         public static StudySession Default
         {
@@ -25,13 +27,18 @@ namespace MemoBoost.Logic
 
         public List<Card> CurrentSession
         {
-            get { return _currentSession; }
+            get { return GetCardsToLearn(_currentSession); }
             set { _currentSession = GetCardsToLearn(value); }
         }
 
-        public List<Card> GetCardsToLearn(List<Card> cards)
+        private List<Card> GetCardsToLearn(List<Card> cards)
         {
-            return cards.Where(c => c.Next <= DateTime.Now).OrderBy(c => c.State).OrderBy(c => c.Next).ToList();
+            if (cards != null)
+            {
+                return cards.Where(c => c.Next <= DateTime.Now).OrderBy(c => c.State).OrderBy(c => c.Next).ToList();
+            }
+            else
+                return new List<Card>();
         }
 
     }

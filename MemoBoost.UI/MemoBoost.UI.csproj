@@ -71,6 +71,9 @@
     <Compile Include="DMngrWin.xaml.cs">
       <DependentUpon>DMngrWin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FinalPage.xaml.cs">
+      <DependentUpon>FinalPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -120,6 +123,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DMngrWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FinalPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

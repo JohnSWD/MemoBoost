@@ -38,10 +38,12 @@ namespace MemoBoost.UI
             DataContext = _card;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e) 
         {
             var b = (Button)sender;
-            ScheduleManager.CardVerdict(_card, (int)b.Tag);
-        }
+            int q = Convert.ToInt32(b.Tag);
+            ScheduleManager.CardVerdict(_card, q);
+            NavigationService.Navigate(new Uri("StudyPage.xaml", UriKind.Relative));
+        } 
     }
 }

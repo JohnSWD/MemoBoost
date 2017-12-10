@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using MemoBoost.Logic;
+using System.Collections.Generic;
+
 namespace MemoBoost.UI
 {
     /// <summary>
@@ -20,21 +12,22 @@ namespace MemoBoost.UI
     /// </summary>
     public partial class HomePage : Page //completed
     {
-        
-        public HomePage() //use navigation service loaded to dispose of study session!!!!!!!!!!!
+        IEnumerable<Deck> _decks;
+        public HomePage()
         {
             InitializeComponent();
-            decksListBox.ItemsSource = Factory.Default.GetDecksRepository().Where(d => d.Cards.Count >=0); //is there a better way? may be turning off lazy loading?
+            Update();
         }
 
         private void Update()
         {
             decksListBox.ItemsSource = null;
-            decksListBox.ItemsSource = Factory.Default.GetDecksRepository().Where(d=>d.Cards.Count>=0);
+            _decks = Factory.Default.GetDecksRepository().Where(d => d.Cards.Count >= 0);
+            decksListBox.ItemsSource = _decks;
         }
 
 
-        private void DelButton_Click(object sender, RoutedEventArgs e)//checked
+        private void DelButton_Click(object sender, RoutedEventArgs e)
         {
             var v = (Deck)decksListBox.SelectedItem;
             if (v!=null)
@@ -43,24 +36,25 @@ namespace MemoBoost.UI
                 v.Cards = null;
                 Factory.Default.GetDecksRepository().ChangeItem(v);
                 Factory.Default.GetDecksRepository().Delete(v);
+                Update();
             }
         }
 
-        private void NCButton_Click(object sender, RoutedEventArgs e)//checked
+        private void NCButton_Click(object sender, RoutedEventArgs e)
         {
             NCrdWin ncw = new NCrdWin();
             if (ncw.ShowDialog().Value)
                 Update();
         }
 
-        private void NDButton_Click(object sender, RoutedEventArgs e)//checked
+        private void NDButton_Click(object sender, RoutedEventArgs e)
         {
             NDckWin ndw = new NDckWin();
             if (ndw.ShowDialog().Value)
                 Update();
         }
 
-        private void ManageButton_Click(object sender, RoutedEventArgs e)//checked
+        private void ManageButton_Click(object sender, RoutedEventArgs e)
         {
             var b = (Button)sender;
             DMngrWin dmw = new DMngrWin();
@@ -69,14 +63,25 @@ namespace MemoBoost.UI
             dmw.Show();
         }
 
-        private void ToStudy_Click(object sender, RoutedEventArgs e)//check for cards to learn
+        private void ToStudy_Click(object sender, RoutedEventArgs e)
         {
             var hl = (Hyperlink)sender;
             var d = (Deck)hl.Tag;
             StudySession.Default.CurrentSession = d.Cards.ToList();
+            StudySession.Default.CurrentDeck = d;
             StudyPage sp = new StudyPage();   
-            //sp.GetDeck?.Invoke(d);
             this.NavigationService.Navigate(sp);
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)//can use Update() method with async/await here, but it is useless(?)
+        {
+            StudySession.Default.CurrentSession = null;
+            StudySession.Default.CurrentDeck=null;
+        }
+
+        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            decksListBox.ItemsSource = _decks.Where(d => d.Name.ToLower().Contains(searchBox.Text.ToLower().Trim()));
         }
     }
 }

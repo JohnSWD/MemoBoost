@@ -31,9 +31,6 @@ namespace MemoBoost.UI
             InitializeComponent();
             OnIdReceived += GetId;
             OnActionCompleted += ToInitialState;
-            //answrBox.AddHandler(TextBox.DropEvent, new DragEventHandler(AnswrBox_Drop), true);
-            //answrBox.Drop += AnswrBox_Drop;
-            //answrBox.PreviewDragOver += AnswrBox_PreviewDragOver;
         }
 
         private void ToInitialState()
