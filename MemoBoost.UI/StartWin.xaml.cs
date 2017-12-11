@@ -34,5 +34,12 @@ namespace MemoBoost.UI
             else
                 Main.Content=new StudyPage();
         }
+
+        private void Cprofile_Click(object sender, RoutedEventArgs e)
+        {
+            UserWin uw = new UserWin();
+            uw.Show();
+            this.Close();
+        }
     }
 }

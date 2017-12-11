@@ -83,11 +83,20 @@
     <Compile Include="NDckWin.xaml.cs">
       <DependentUpon>NDckWin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NewUserWin.xaml.cs">
+      <DependentUpon>NewUserWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RenameUserWin.xaml.cs">
+      <DependentUpon>RenameUserWin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StartWin.xaml.cs">
       <DependentUpon>StartWin.xaml</DependentUpon>
     </Compile>
     <Compile Include="StudyPage.xaml.cs">
       <DependentUpon>StudyPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserWin.xaml.cs">
+      <DependentUpon>UserWin.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -142,11 +151,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="NewUserWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RenameUserWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="StartWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="StudyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

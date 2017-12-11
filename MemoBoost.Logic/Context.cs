@@ -11,16 +11,20 @@ namespace MemoBoost.Logic
     {
         public DbSet<Card> Cards { get; set; }
         public DbSet<Deck> Decks { get; set; }
+        public DbSet<User> User{ get; set; }
 
         public Context() : base("MBDB")
         {
-
+           Database.SetInitializer(new MBDBInitializer());
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Deck>().HasOptional(i => i.User).WithMany(u => u.Decks).HasForeignKey(k => k.UserID);
             modelBuilder.Entity<Card>().HasOptional(i => i.Deck).WithMany(d => d.Cards).HasForeignKey(k => k.DeckID);
             base.OnModelCreating(modelBuilder);
         }
+
+
     }
 }

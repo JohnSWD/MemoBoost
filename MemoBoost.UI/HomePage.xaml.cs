@@ -22,7 +22,7 @@ namespace MemoBoost.UI
         private void Update()
         {
             decksListBox.ItemsSource = null;
-            _decks = Factory.Default.GetDecksRepository().Where(d => d.Cards.Count >= 0);
+            _decks = Factory.Default.GetDecksRepository().Where(d => d.Cards.Count >= 0).Where(d=>d.UserID==StudySession.Default.CurrentUserID);
             decksListBox.ItemsSource = _decks;
         }
 

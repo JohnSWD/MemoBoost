@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MemoBoost.UI"
         mc:Ignorable="d"
-        Title="DMngrWin" Height="300" Width="450">
+        Title="DMngrWin" Height="300" Width="450" MinWidth="450">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1.5*"/>
-            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="70"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -18,7 +18,7 @@
             <RowDefinition/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <ListBox Name="cardsListBox" HorizontalContentAlignment="Stretch" Margin="5" Grid.RowSpan="4" SelectionChanged="CardsListBox_SelectionChanged">
+        <ListBox Name="cardsListBox" HorizontalContentAlignment="Stretch" Margin="5" Grid.RowSpan="3" SelectionChanged="CardsListBox_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -32,7 +32,7 @@
         <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Text="Question: "></TextBlock>
         <TextBox TextWrapping="Wrap" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" LostFocus="TextBoxLostFocus" Focusable="False" Text="{Binding Path=Question}" Name="qstnBox" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Stretch"></TextBox>
         <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Text="Answer: "></TextBlock>
-        <TextBox PreviewDragOver="AnswrBox_PreviewDragOver" Drop="AnswrBox_Drop" AllowDrop="True" TextWrapping="Wrap" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" LostFocus="TextBoxLostFocus" Focusable="False" Text="{Binding Path=Answer}" Name ="answrBox" Grid.Column="2" Grid.Row="2" Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></TextBox>
+        <TextBox PreviewDragOver="AnswrBox_PreviewDragOver" Drop="AnswrBox_Drop" AllowDrop="False" TextWrapping="Wrap" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" LostFocus="TextBoxLostFocus" Focusable="False" Text="{Binding Path=Answer}" Name ="answrBox" Grid.Column="2" Grid.Row="2" Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></TextBox>
         <Button Name="changeButton" Content="Change" Grid.Row="3" Grid.Column="2" Margin="5" Click="ChangeButton_Click" ></Button>
         <Button Name="delButton" Content="Delete" Grid.Row="3" Grid.Column="1" Margin="5,5,5,0" Height="20" VerticalAlignment="Top" Click="DelButton_Click"></Button>
     </Grid>

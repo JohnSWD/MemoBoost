@@ -16,25 +16,25 @@ using System.Windows.Shapes;
 namespace MemoBoost.UI
 {
     /// <summary>
-    /// Логика взаимодействия для NDckWin.xaml
+    /// Логика взаимодействия для NewUserWIn.xaml
     /// </summary>
-    public partial class NDckWin : Window //deck will be connected to a certain user
+    public partial class NewUserWIn : Window
     {
-        public NDckWin()
+        public NewUserWIn()
         {
             InitializeComponent();
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!Factory.Default.GetDecksRepository().Items.Any(d => d.Name.ToLower() == nameBox.Text.ToLower()))
+            if (!Factory.Default.GetUsersRepository().Items.Any(u => u.Name.ToLower() == nameBox.Text.ToLower()))
             {
-                var deck = new Deck { Name = nameBox.Text, UserID=StudySession.Default.CurrentUserID };
-                Factory.Default.GetDecksRepository().Add(deck);
+                var user = new User{ Name = nameBox.Text };
+                Factory.Default.GetUsersRepository().Add(user);
                 DialogResult = true;
             }
             else
-                MessageBox.Show("A deck with this name already exists.");
+                MessageBox.Show("A user with this name already exists.");
         }
     }
 }

@@ -48,6 +48,7 @@ namespace MemoBoost.UI
             answrBox.Focusable = false;
             //deckBox.Focusable = false;
             changeButton.IsEnabled = true;
+            answrBox.AllowDrop = true;
         }
 
         private void GetId(int id)
@@ -70,7 +71,6 @@ namespace MemoBoost.UI
                 Factory.Default.GetCardsRepository().Delete(c);
                 Update();
             }
-
         }
 
         private void CardsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -91,9 +91,10 @@ namespace MemoBoost.UI
             answrBox.Focusable = true;
             //deckBox.Focusable = true;
             changeButton.IsEnabled = false;
+            answrBox.AllowDrop = true;
         }
 
-        private void TextBoxLostFocus(object sender, RoutedEventArgs e)//is it ok
+        private void TextBoxLostFocus(object sender, RoutedEventArgs e)
         {
             _currentCard.Question = qstnBox.Text;
             _currentCard.Answer = answrBox.Text;
@@ -110,9 +111,6 @@ namespace MemoBoost.UI
                 MediaManager.Copy(file);
                 s.Focus();
                 //consturct string with question+image name
-                
-                //var df = DataFormats.Bitmap;
-
                 
             }
         }

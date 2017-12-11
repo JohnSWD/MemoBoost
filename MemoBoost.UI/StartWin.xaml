@@ -17,6 +17,10 @@
         <TextBlock Margin="50 0  0 0">
             <Hyperlink Name="Study" Tag="Study" Click="Hyperlink_Click" Foreground="Black">Study</Hyperlink>
         </TextBlock>
+        <TextBlock HorizontalAlignment="Right" Margin="0 0  10 0">
+            <Hyperlink Name="cprofile" Click="Cprofile_Click" Foreground="Black">Change profile</Hyperlink>
+        </TextBlock>
+        
         <Frame Grid.Row="1" Name="Main" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

@@ -13,6 +13,9 @@ namespace MemoBoost.Logic
         public string Name { get; set; }
 
         //public string CardsJ { get; set; }
+        public User User { get; set; }
+
+        public int? UserID { get; set; }
 
         public virtual ICollection<Card> Cards { get; set; } //will be stored as JSON string 
 

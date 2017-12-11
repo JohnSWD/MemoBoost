@@ -24,7 +24,7 @@ namespace MemoBoost.UI
         public NCrdWin()
         {
             InitializeComponent();
-            decksCBox.ItemsSource = Factory.Default.GetDecksRepository().Where(d=>d.Cards.Count>=0).OrderBy(d=>d.Name);
+            decksCBox.ItemsSource = Factory.Default.GetDecksRepository().Where(d=>d.Cards.Count>=0).Where(d=>d.UserID==StudySession.Default.CurrentUserID).OrderBy(d=>d.Name);
         }
         
 

@@ -11,6 +11,7 @@ namespace MemoBoost.Logic
         private static StudySession _default;
         private List<Card> _currentSession;
         public Deck CurrentDeck { get; set; }
+        public int CurrentUserID { get; set; }
 
 
         public static StudySession Default
