@@ -73,7 +73,7 @@ namespace MemoBoost.Logic
 
         public static void CardVerdict(Card card, int q)
         {
-            if (card.State == 0)
+            if (card.State <2)
                 Learning(card, q);
             else
                 Reviewing(card, q);

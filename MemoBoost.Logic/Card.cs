@@ -27,6 +27,10 @@ namespace MemoBoost.Logic
         public string Question { get; set; }
 
         public string Answer { get; set; }
+
+        public string ASource { get; set; }
+
+        public string QSource { get; set; }
     }
 }
     

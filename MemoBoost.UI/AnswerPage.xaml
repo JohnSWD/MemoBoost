@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <DockPanel Margin="5">
             <TextBlock Height="30" Name="absweBlock" Margin="5" DockPanel.Dock="Top" Text="{Binding Answer}" HorizontalAlignment="Center" FontSize="20"></TextBlock>
-            <Image Source="{Binding Source}" DockPanel.Dock="Bottom" />
+            <Image Source="{Binding ASource}" DockPanel.Dock="Bottom" />
         </DockPanel>
         <WrapPanel Grid.Row="1" Margin="5" HorizontalAlignment="Center" >
             <Button Name="repeatButton"  Height="30" Margin="0 5 20 0" Content="Repeat" Tag="1" Click="Button_Click"/>

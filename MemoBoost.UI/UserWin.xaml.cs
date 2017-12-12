@@ -63,25 +63,30 @@ namespace MemoBoost.UI
 
         }
 
-        private void DeleteButton_Click(object sender, RoutedEventArgs e)//doesnt work (need to split in two methods)
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             var u = (User)userListBox.SelectedItem;
             if(u!=null)
             {
-                Factory.Default.GetUsersRepository().Delete(u);
-                var decks = Factory.Default.GetDecksRepository().Where(d => d.UserID == u.ID);
-                foreach(var deck in decks)
-                {
-                    Factory.Default.GetCardsRepository().DeleteRange(Factory.Default.GetCardsRepository().Where(c => c.DeckID == deck.ID));
-                    deck.Cards = null;
-                    Factory.Default.GetDecksRepository().ChangeItem(deck);
-                    Factory.Default.GetDecksRepository().Delete(deck);
-                }
+                var decks = Factory.Default.GetDecksRepository().Where(d=>d.Cards.Count>=0).Where(d => d.UserID == u.ID);
+                DelRelatedDecks(decks, u);
                 u.Decks = null;
-                Factory.Default.GetUsersRepository().ChangeItem(u); //smells like recursion
+                Factory.Default.GetUsersRepository().ChangeItem(u); 
                 Factory.Default.GetUsersRepository().Delete(u);
                 Update();
             }
+        }
+
+        private void DelRelatedDecks(IEnumerable<Deck> decks, User u)
+        {
+            foreach (var deck in decks)
+            {
+                Factory.Default.GetCardsRepository().DeleteRange(Factory.Default.GetCardsRepository().Where(c => c.DeckID == deck.ID));
+                deck.Cards = null;
+                Factory.Default.GetDecksRepository().ChangeItem(deck);
+                Factory.Default.GetDecksRepository().Delete(deck);
+            }
+
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)

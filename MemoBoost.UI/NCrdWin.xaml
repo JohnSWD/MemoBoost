@@ -12,10 +12,20 @@
             <RowDefinition/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Question" Margin="5"/>
-        <TextBox TextWrapping="Wrap" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Name ="qstnBox" Margin="5 20 5 10"/>
-        <TextBlock Grid.Row="1" Text="Answer" Margin="5"/>
-        <TextBox TextWrapping="Wrap" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Name="answrBox"  Grid.Row="1" Margin="5 20 5 10"/>
+        <TextBlock  Text="Question" Margin="5"/>
+        <Button Tag="q" VerticalAlignment="Top" HorizontalAlignment="Right" Content="Remove the image." Margin="5" Name="rqImageButton" Click="ImageButton_Click"/>
+        <Button Tag="a" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="1" Content="Remove the image." Margin="0,5,5,0" Name="raImageButton" Click="ImageButton_Click"/>
+        <DockPanel  Margin="5 25 5 10">
+            <Image Name="qstnImage" DockPanel.Dock="Right"/>
+            <TextBox Tag="q" AllowDrop="True" PreviewDragOver="Box_PreviewDragOver" Drop="Box_Drop" DockPanel.Dock="Left" TextWrapping="Wrap" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Name ="qstnBox"/>
+        </DockPanel>
+       
+        <TextBlock Grid.Row="1" Text="Answer" HorizontalAlignment="Left" Margin="5"/>
+        <DockPanel Grid.Row="1" Margin="5 25 5 10">
+            <Image Name="answrImage" DockPanel.Dock="Right"/>
+            <TextBox  AllowDrop="True" PreviewDragOver="Box_PreviewDragOver" Drop="Box_Drop" DockPanel.Dock="Left" Tag="a" TextWrapping="Wrap" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Name="answrBox"/>
+        </DockPanel>
+
         <WrapPanel Grid.Row="2" HorizontalAlignment="Right" Margin="5">
             <ComboBox Name="decksCBox" Width="150" DisplayMemberPath="Name" />
             <Button Name="addButton" Content="Add"  Width="70" Margin="10 0 0 0" Click="AddButton_Click"></Button>

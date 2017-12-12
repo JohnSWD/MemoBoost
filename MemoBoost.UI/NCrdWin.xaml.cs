@@ -18,8 +18,7 @@ namespace MemoBoost.UI
     /// <summary>
     /// Логика взаимодействия для NCrdWin.xaml
     /// </summary>
-    public partial class NCrdWin : Window//partly completed, adding images to question/answer to be implemented
-        //cards type (basic, reverse, picture->answer, fill in the gaps?)
+    public partial class NCrdWin : Window
     {
         public NCrdWin()
         {
@@ -28,15 +27,52 @@ namespace MemoBoost.UI
         }
         
 
-        private void AddButton_Click(object sender, RoutedEventArgs e)//checked
+        private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             if (decksCBox.SelectedIndex != -1)
             {
                 var d = decksCBox.SelectedItem as Deck;
-                var nc = new Card { Question = qstnBox.Text, Answer = answrBox.Text, DeckID=d.ID };
+                var nc = new Card { Question = qstnBox.Text, Answer = answrBox.Text, DeckID=d.ID, ASource=answrImage.Source?.ToString(), QSource=qstnImage.Source?.ToString() };
                 Factory.Default.GetCardsRepository().Add(nc);
                 DialogResult = true;
             }
+        }
+
+        private void Box_Drop(object sender, DragEventArgs e)
+        {
+            try
+            {
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                {
+                    string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                    var file = files[0];
+                    var s = (TextBox)sender;
+                    if ((string)s.Tag == "q")
+                        qstnImage.Source = new BitmapImage(new Uri(file));
+                    else
+                        answrImage.Source = new BitmapImage(new Uri(file));
+                    s.Focus();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Non-image files cannot be attached.");
+            }
+        }
+
+        private void Box_PreviewDragOver(object sender, DragEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void ImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            var path = qstnImage.Source;
+            var b = (Button)sender;
+            if ((string)b.Tag == "q")
+                qstnImage.Source = null;
+            else
+                answrImage.Source = null;
         }
     }
 }

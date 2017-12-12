@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
         <DockPanel Margin="5" >
             <TextBlock Height="30" Name="qstnBlock" Margin="5" DockPanel.Dock="Top" HorizontalAlignment="Center" FontSize="18" Text="{Binding Question}"></TextBlock>
-            <Image DockPanel.Dock="Bottom"/>
+            <Image DockPanel.Dock="Bottom" Source="{Binding QSource}"/>
         </DockPanel>
         <Button Height="30" Grid.Row="1" Width="100" Content="Show answer" Name="answrButton" Click="AnswrButton_Click"/>
 
