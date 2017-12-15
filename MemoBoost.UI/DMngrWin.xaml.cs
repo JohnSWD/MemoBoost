@@ -15,21 +15,21 @@ using System.Windows.Shapes;
 
 namespace MemoBoost.UI
 {
-    public delegate void GetIdCallback(int id);
+    public delegate void GetDeckCallback(Deck deck);
     public delegate void ParallelUpdate();
     /// <summary>
     /// Логика взаимодействия для DMngrWin.xaml
     /// </summary>
     public partial class DMngrWin : Window //disable drop availability when there is no selecteditem
     {
-        public GetIdCallback OnIdReceived;
+        public GetDeckCallback OnDeckReceived;
         public ParallelUpdate OnActionCompleted;
-        private int _theid;
+        private Deck _thedeck;
         private Card _currentCard;
         public DMngrWin()
         {
             InitializeComponent();
-            OnIdReceived += GetId;
+            OnDeckReceived += GetDeck;
             OnActionCompleted += ToInitialState;
         }
 
@@ -54,15 +54,17 @@ namespace MemoBoost.UI
             rqImageButton.Visibility = Visibility.Hidden;
         }
 
-        private void GetId(int id)
-        {
-            _theid = id;
+        private void GetDeck(Deck deck)
+        { 
+            _thedeck = deck;
             Update();
         }
 
         private void Update()
         {
-            cardsListBox.ItemsSource = Factory.Default.GetDecksRepository().Where(d => d.Cards.Count >= 0).Where(d=>d.ID==_theid).ToList()[0].Cards;
+            _thedeck.Cards=Factory.Default.GetCardsRepository().Where(c => c.DeckID == _thedeck.ID).ToList();
+            cardsListBox.ItemsSource = _thedeck.Cards;
+            Factory.Default.GetDecksRepository().ChangeItem(_thedeck);
             OnActionCompleted?.Invoke();
         }
 
@@ -70,7 +72,7 @@ namespace MemoBoost.UI
         {
             var c = cardsListBox.SelectedItem as Card;
             if(c!=null)
-            {
+           {
                 Factory.Default.GetCardsRepository().Delete(c);
                 Update();
             }
@@ -79,16 +81,15 @@ namespace MemoBoost.UI
         private void CardsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ToPartlyIntialState();
-            var c = (Card)cardsListBox.SelectedItem;
-            if (c != null)
+            _currentCard = (Card)cardsListBox.SelectedItem;
+            if (_currentCard != null)
             {
                 changeButton.IsEnabled = true;
-                if(c.ASource!=null)
+                if(_currentCard.ASource!=null)
                     raImageButton.Visibility = Visibility.Visible;
-                if(c.QSource!=null)//shows button when source is null!!!!!
+                if(_currentCard.QSource!=null)
                     rqImageButton.Visibility = Visibility.Visible;
-                DataContext = c;
-                _currentCard = c;
+                DataContext = _currentCard;
             }
                 
         }
@@ -97,7 +98,6 @@ namespace MemoBoost.UI
         {
             qstnBox.Focusable = true;
             answrBox.Focusable = true;
-            //deckBox.Focusable = true;
             changeButton.IsEnabled = false;
             if(_currentCard.ASource==null)
                 answrBox.AllowDrop = true;
@@ -107,8 +107,6 @@ namespace MemoBoost.UI
 
         private void TextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            _currentCard.Question = qstnBox.Text;//possibly can be simplified if _currentCard was datacontext
-            _currentCard.Answer = answrBox.Text;
             Factory.Default.GetCardsRepository().ChangeItem(_currentCard);
         }
 
@@ -122,13 +120,11 @@ namespace MemoBoost.UI
                     string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
                     var file = files[0];
                     var s = (TextBox)sender;
-                    MediaManager.Copy(file, out source);
+                    Factory.Default.GetMediaManager().Copy(file, out source);
                     if ((string)s.Tag == "a")
                     {
                         _currentCard.ASource = source;
-                        var bi = new BitmapImage(new Uri(source));
-                        bi.CacheOption = BitmapCacheOption.OnLoad;//doesnt affect deletion problem
-                        answrImage.Source = bi;
+                        answrImage.Source = new BitmapImage(new Uri(source));
                     }
                     else
                     {
@@ -141,7 +137,6 @@ namespace MemoBoost.UI
             catch
             {
                 MessageBox.Show("Non-image files cannot be attached.");
-
             }
         }
 
@@ -170,7 +165,7 @@ namespace MemoBoost.UI
                 raImageButton.Visibility = Visibility.Hidden;
                 Factory.Default.GetCardsRepository().ChangeItem(_currentCard);
             }
-            MediaManager.Remove(path);//doesnt work
+            Factory.Default.GetMediaManager().Remove(path);//doesnt work
         }
     }
 }

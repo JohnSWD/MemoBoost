@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace MemoBoost.Logic
 {
-    public class MediaManager
+    public class MediaManager : IMediaManager
     {
-        private static string fpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Media");
 
-        public static void Copy(string file, out string filePath)//worked without out, 
+        public void Copy(string file, out string filePath)//worked without out, 
         {
             string mediaFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Media");
             if (!Directory.Exists(mediaFolder)) Directory.CreateDirectory(mediaFolder);
@@ -25,7 +24,7 @@ namespace MemoBoost.Logic
             }
         }
 
-        private static string Modify(string filepath)
+        private string Modify(string filepath)
         {
             int count = 1;
             string name = Path.GetFileNameWithoutExtension(filepath);
@@ -40,9 +39,9 @@ namespace MemoBoost.Logic
             return modified;
         }
 
-        public static void Remove(string path)//exception
+        public void Remove(string path)//exception
         {
-     
+            string fpath= Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Media");
             File.Delete(Path.Combine(fpath, Path.GetFileName(path)));
         }
     }

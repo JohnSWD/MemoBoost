@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MemoBoost.UI"
         mc:Ignorable="d"
-        Title="NewUserWIn" Height="110" Width="400">
+        Title="Memory Boost" Height="110" Width="400"
+        ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*"/>

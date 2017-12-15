@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MemoBoost.UI"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="NDckWin" Height="110" Width="400">
+        Title="Memory Boost" Height="110" Width="400">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*"/>

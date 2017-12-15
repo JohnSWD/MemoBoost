@@ -38,7 +38,7 @@
                                 <TextBlock Text="{Binding Path=LrnCards, StringFormat='Learn: {0}'}"></TextBlock>
                                 <TextBlock Text="{Binding Path=RevCards, StringFormat='Review: {0}'}"></TextBlock>
                             </StackPanel>
-                            <Button Tag="{Binding Path=ID}" Name="manageButton" Grid.Column="2" Content="Manage" Click="ManageButton_Click"></Button>
+                            <Button Tag="{Binding}" Name="manageButton" Grid.Column="2" Content="Manage" Click="ManageButton_Click"></Button>
                         </Grid>
                     </Border>
                 </DataTemplate>
@@ -47,7 +47,10 @@
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5">
             <Button Name="NDButton" Margin="5 0 0 0"  Content="New deck" Click="NDButton_Click"/>
             <Button Name="NCButton" Margin="10 0 0 0" Content="New card" Click="NCButton_Click"/>
-            <Button Name="DelButton" Content="Delete the deck" Margin="30 0 0 0 " Click="DelButton_Click"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+            <Button Name="DelButton" Content="Delete the deck" Click="DelButton_Click"/>
+            <Button Name="ResButton" Content="Reset the deck" Margin="10 0 5 0" Click="ResButton_Click"/>
         </StackPanel>
     </Grid>
 </Page>

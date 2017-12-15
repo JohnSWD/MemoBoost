@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MemoBoost.UI"
         mc:Ignorable="d"
-        Title="StartWin" Height="300" Width="450">
+        Title="Memory Boost" MinHeight="300" Height="300" Width="450" MinWidth="450">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="15"/>
@@ -14,10 +14,8 @@
         <TextBlock Margin="10 0 0 0">
             <Hyperlink Name="Home" Tag="Home" Click="Hyperlink_Click" Foreground="Black">Home</Hyperlink>
         </TextBlock>
-        <TextBlock Margin="50 0  0 0">
-            <Hyperlink Name="Study" Tag="Study" Click="Hyperlink_Click" Foreground="Black">Study</Hyperlink>
-        </TextBlock>
-        <TextBlock HorizontalAlignment="Right" Margin="0 0  10 0">
+        
+        <TextBlock HorizontalAlignment="Left" Margin="50 0  10 0">
             <Hyperlink Name="cprofile" Click="Cprofile_Click" Foreground="Black">Change profile</Hyperlink>
         </TextBlock>
         

@@ -42,7 +42,7 @@ namespace MemoBoost.UI
         {
             var b = (Button)sender;
             int q = Convert.ToInt32(b.Tag);
-            ScheduleManager.CardVerdict(_card, q);
+            Factory.Default.GetScheduler().CardVerdict(_card, q);
             NavigationService.Navigate(new Uri("StudyPage.xaml", UriKind.Relative));
         } 
     }

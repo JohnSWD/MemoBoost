@@ -58,7 +58,7 @@ namespace MemoBoost.UI
         {
             var b = (Button)sender;
             DMngrWin dmw = new DMngrWin();
-            dmw.OnIdReceived?.Invoke((int)b.Tag);
+            dmw.OnDeckReceived?.Invoke((Deck)b.Tag);
             dmw.OnActionCompleted += Update;
             dmw.Show();
         }
@@ -73,7 +73,7 @@ namespace MemoBoost.UI
             this.NavigationService.Navigate(sp);
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)//can use Update() method with async/await here, but it is useless(?)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             StudySession.Default.CurrentSession = null;
             StudySession.Default.CurrentDeck=null;
@@ -82,6 +82,19 @@ namespace MemoBoost.UI
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             decksListBox.ItemsSource = _decks.Where(d => d.Name.ToLower().Contains(searchBox.Text.ToLower().Trim()));
+        }
+
+        private void ResButton_Click(object sender, RoutedEventArgs e)
+        {
+            var d = decksListBox.SelectedItem as Deck;
+            if (d != null)
+            {
+                foreach (var card in d.Cards)
+                {
+                    Factory.Default.GetScheduler().Reset(card);
+                }
+                Update();
+            }
         }
     }
 }

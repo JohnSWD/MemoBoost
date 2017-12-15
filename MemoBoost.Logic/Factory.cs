@@ -9,9 +9,11 @@ namespace MemoBoost.Logic
     public class Factory
     {
         private static Factory _default;
-        private Repository<Card> _cardsrep = new CardsRepository();
-        private Repository<Deck> _decksrep = new DecksRepository();
-        private Repository<User> _usersrep = new UsersRepository();      
+        private IRepository<Card> _cardsrep = new CardsRepository();
+        private IRepository<Deck> _decksrep = new DecksRepository();
+        private IRepository<User> _usersrep = new UsersRepository();
+        private IScheduleManager _scheduleManager = new ScheduleManager();
+        private IMediaManager _mediaManager = new MediaManager();
 
         public static Factory Default
         {
@@ -25,20 +27,29 @@ namespace MemoBoost.Logic
             }
         }
 
-        public Repository<Card> GetCardsRepository()
+        public IRepository<Card> GetCardsRepository()
         {
             return _cardsrep;
         }
 
-        public Repository<Deck> GetDecksRepository()
+        public IRepository<Deck> GetDecksRepository()
         {
             return _decksrep;
         }
 
-        public Repository<User> GetUsersRepository()
+        public IRepository<User> GetUsersRepository()
         {
             return _usersrep;
         }
+
+        public IScheduleManager GetScheduler()
+        {
+            return _scheduleManager;
+        }
         
+        public IMediaManager GetMediaManager()
+        {
+            return _mediaManager;
+        }
     }
 }

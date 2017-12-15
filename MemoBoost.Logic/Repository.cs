@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MemoBoost.Logic
 {
-   public abstract class Repository<TEntity> where TEntity: class
+   public abstract class Repository<TEntity>: IRepository<TEntity> where TEntity : class
     {
         protected IEnumerable<TEntity> _items;
 
@@ -23,7 +23,7 @@ namespace MemoBoost.Logic
             }
         }
 
-        public virtual void Add(TEntity item)
+        public void Add(TEntity item)
         {
             using (var context = new Context())
             {
@@ -32,7 +32,7 @@ namespace MemoBoost.Logic
             }
         }
 
-        public virtual void AddRange(IEnumerable<TEntity> items)
+        public void AddRange(IEnumerable<TEntity> items)
         {
             using (var context = new Context())
             {
@@ -44,7 +44,7 @@ namespace MemoBoost.Logic
             }
         }
 
-        public virtual void Delete(TEntity item)
+        public void Delete(TEntity item)
         {
             using (var context = new Context())
             {
@@ -53,7 +53,7 @@ namespace MemoBoost.Logic
             }
         }
 
-        public virtual void DeleteRange(IEnumerable<TEntity> items)
+        public void DeleteRange(IEnumerable<TEntity> items)
         {
             using (var context = new Context())
             {
@@ -66,7 +66,7 @@ namespace MemoBoost.Logic
         }
 
 
-        public virtual void ChangeItem(TEntity item)
+        public void ChangeItem(TEntity item)
         {
             using (var context = new Context())
             {

@@ -31,8 +31,8 @@ namespace MemoBoost.UI
             var x = (Hyperlink)sender;
             if ((string)x.Tag == "Home")
                 Main.Content = new HomePage();
-            else
-                Main.Content=new StudyPage();
+            //else
+            //    Main.Content=new StudyPage();
         }
 
         private void Cprofile_Click(object sender, RoutedEventArgs e)

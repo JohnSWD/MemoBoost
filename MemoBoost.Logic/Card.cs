@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,9 +30,16 @@ namespace MemoBoost.Logic
 
         public string Answer { get; set; }
 
-        public string ASource { get; set; }
+        public string PASource{get;set;}
 
-        public string QSource { get; set; }
+        [NotMapped]
+        public string ASource { get { return PASource!=null ? Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Media"), PASource) : null; } set { if (value != null) PASource = Path.GetFileName(value); } }
+
+        public string PQSource { get; set; }
+
+        [NotMapped]
+        public string QSource { get { return PQSource!=null ? Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Media"), PQSource):null; } set { if (value != null) PQSource = Path.GetFileName(value); } }
+
     }
 }
     

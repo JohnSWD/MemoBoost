@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -92,12 +93,41 @@ namespace MemoBoost.UI
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
             var u = (User)userListBox.SelectedItem;
-            if (u != null)
+            if ((u != null && u.Password==null) || (Convert.ToBase64String(MD5.Create().ComputeHash(Encoding.ASCII.GetBytes(passwordBox.Password))) == u.Password))
             {
                 StudySession.Default.CurrentUserID = u.ID;
                 StartWin sw = new StartWin();
                 sw.Show();
                 this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Некорректные пароль.");
+            }
+        }
+
+        private void PasswordButton_Click(object sender, RoutedEventArgs e)
+        {
+            var u = userListBox.SelectedItem as User;
+            if (u != null)
+            {
+                PasswordWin pw = new PasswordWin();
+                pw.OnUserReceived?.Invoke(u);
+                if (pw.ShowDialog().Value)
+                    Update();
+            }
+        }
+
+        private void UserListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var u = userListBox.SelectedItem as User;
+            if (u!=null)
+            {
+                if (u.Password!=null)
+                {
+                    passwordPanel.Visibility = Visibility.Visible;
+                    passwordButton.Visibility = Visibility.Hidden;
+                }
             }
         }
     }
