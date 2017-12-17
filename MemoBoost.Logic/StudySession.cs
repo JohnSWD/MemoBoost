@@ -42,7 +42,7 @@ namespace MemoBoost.Logic
                 return new List<Card>();
         }
 
-        public void SaveInfo(int state) //state: 1-study, 2-review
+        public void SaveInfo(int state)//passes info to statisticks class about a user's study process
         {
             var i = Factory.Default.GetStsRepository().Items.FirstOrDefault(s => s.Date.ToShortDateString() == DateTime.Now.ToShortDateString() && s.UserID==CurrentUserID);
             if (i != null && state == 1)

@@ -20,7 +20,8 @@ namespace MemoBoost.UI
     /// <summary>
     /// Логика взаимодействия для DMngrWin.xaml
     /// </summary>
-    public partial class DMngrWin : Window //disable drop availability when there is no selecteditem
+    public partial class DMngrWin : Window //information is updated automatically after a textbox loses its focus;
+        //only one card can be dropped per textbox
     {
         public GetDeckCallback OnDeckReceived;
         public ParallelUpdate OnActionCompleted;
@@ -47,7 +48,6 @@ namespace MemoBoost.UI
         {
             qstnBox.Focusable = false;
             answrBox.Focusable = false;
-            //deckBox.Focusable = false;
             answrBox.AllowDrop = false;
             qstnBox.AllowDrop = false;
             raImageButton.Visibility = Visibility.Hidden;

@@ -18,7 +18,7 @@ namespace MemoBoost.Logic
 
         }
 
-        private int CalculateInterval(double EF, int Interval, int skipped, int q) //q>1; skipped=DateTime.Now-Next
+        private int CalculateInterval(double EF, int Interval, int skipped, int q)
         {
             double nInterval = (Interval + skipped / (0.5 * q * q - 4.5 * q + 11)) * EF;
             return (int)(Math.Round(nInterval));
@@ -44,7 +44,7 @@ namespace MemoBoost.Logic
             Factory.Default.GetCardsRepository().ChangeItem(card);
         }
 
-        private void Learning(Card card, int q) //easy=4, good=3, relearn=1
+        private void Learning(Card card, int q)
         {
             card.State = 1;
             if (q == 4)

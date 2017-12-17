@@ -16,26 +16,26 @@ namespace MemoBoost.Logic
 
         public int? DeckID { get; set; }
 
-        public int State { get; set; } = 0;//new-0,learning-1 or studying-2
+        public int State { get; set; } = 0;
 
-        public DateTime Next { get; set; } = DateTime.Now;//the date when the card will be shown
+        public DateTime Next { get; set; } = DateTime.Now; // when the card will be shown again
 
-        public double EF { get; set; } = 2.5; //easines factor (calculated via a function), (1.3,2.5); 2.5 - default value
+        public double EF { get; set; } = 2.5; //easines factore
 
-        public int Steps { get; set; } = 0;//the number of steps to get to studying state [0;2]
+        public int Steps { get; set; } = 0; //steps to graduate to review state
 
-        public int Interval { get; set; } = 1;//function of EF and number of studying days
+        public int Interval { get; set; } = 1; //gap between card's appearances
 
         public string Question { get; set; }
 
         public string Answer { get; set; }
 
-        public string PASource{get;set;}
+        public string PASource{get;set;}//image name for answer
 
         [NotMapped]
         public string ASource { get { return PASource!=null ? Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Media"), PASource) : null; } set { if (value != null) PASource = Path.GetFileName(value); } }
-
-        public string PQSource { get; set; }
+        
+        public string PQSource { get; set; }//image name for question
 
         [NotMapped]
         public string QSource { get { return PQSource!=null ? Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Media"), PQSource):null; } set { if (value != null) PQSource = Path.GetFileName(value); } }

@@ -10,7 +10,7 @@ namespace MemoBoost.UI
     /// <summary>
     /// Логика взаимодействия для HomePage.xaml
     /// </summary>
-    public partial class HomePage : Page //completed
+    public partial class HomePage : Page
     {
         IEnumerable<Deck> _decks;
         public HomePage()

@@ -20,7 +20,7 @@
         </TextBlock>
 
         <TextBlock HorizontalAlignment="Left" Margin="135 0  10 0">
-            <Hyperlink Name="opstat" Click="Opstat_Click" Foreground="Black">Study statisticks</Hyperlink>
+            <Hyperlink Name="opstat" Click="Opstat_Click" Foreground="Black">Study statistics</Hyperlink>
         </TextBlock>
 
         <Frame Grid.Row="1" Name="Main" NavigationUIVisibility="Hidden"/>

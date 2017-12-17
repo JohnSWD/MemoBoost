@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MemoBoost.UI"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="StatisticksWin"  MinHeight="400" MinWidth="800" Height="400" Width="800">
+        Title="Memory Boost"  MinHeight="400" MinWidth="800" Height="400" Width="800">
     <Grid Name="grid">
         <Grid.RowDefinitions>
             <RowDefinition/>

@@ -10,7 +10,7 @@ namespace MemoBoost.Logic
     public class MediaManager : IMediaManager
     {
 
-        public void Copy(string file, out string filePath)//worked without out, 
+        public void Copy(string file, out string filePath)
         {
             string mediaFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Media");
             if (!Directory.Exists(mediaFolder)) Directory.CreateDirectory(mediaFolder);

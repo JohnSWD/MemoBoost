@@ -6,18 +6,17 @@ using System.Threading.Tasks;
 
 namespace MemoBoost.Logic
 {
-    public class Deck //can be stored as json in a bigger class (collection) ?
+    public class Deck
     {
         public int ID { get; set; }
 
         public string Name { get; set; }
 
-        //public string CardsJ { get; set; }
         public User User { get; set; }
 
         public int? UserID { get; set; }
 
-        public virtual ICollection<Card> Cards { get; set; } //will be stored as JSON string 
+        public virtual ICollection<Card> Cards { get; set; }
 
         public int RevCards
         {
