@@ -28,11 +28,17 @@ namespace MemoBoost.UI
 
         private void Hyperlink_Click(object sender, RoutedEventArgs e)
         {
-            var x = (Hyperlink)sender;
-            if ((string)x.Tag == "Home")
-                Main.Content = new HomePage();
-            //else
-            //    Main.Content=new StudyPage();
+            try
+            {
+                var x = (Hyperlink)sender;
+                if ((string)x.Tag == "Home")
+                    Main.Content = new HomePage();
+            }
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
+            }
+
         }
 
         private void Cprofile_Click(object sender, RoutedEventArgs e)

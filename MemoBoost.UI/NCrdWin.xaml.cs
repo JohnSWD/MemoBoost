@@ -29,18 +29,25 @@ namespace MemoBoost.UI
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            if (decksCBox.SelectedIndex != -1)
+            try
             {
-                string apath=null;
-                string qpath=null;
-                if (answrImage.Source != null)
-                    Factory.Default.GetMediaManager().Copy(answrImage.Source.ToString().Replace("file:///", ""), out apath);
-                if (qstnImage.Source != null)
-                    Factory.Default.GetMediaManager().Copy(qstnImage.Source.ToString().Replace("file:///", ""), out qpath);
-                var d = decksCBox.SelectedItem as Deck;
-                var nc = new Card { Question = qstnBox.Text, Answer = answrBox.Text, DeckID=d.ID, ASource=apath, QSource=qpath};
-                Factory.Default.GetCardsRepository().Add(nc);
-                DialogResult = true;
+                if (decksCBox.SelectedIndex != -1)
+                {
+                    string apath = null;
+                    string qpath = null;
+                    if (answrImage.Source != null)
+                        Factory.Default.GetMediaManager().Copy(answrImage.Source.ToString().Replace("file:///", ""), out apath);
+                    if (qstnImage.Source != null)
+                        Factory.Default.GetMediaManager().Copy(qstnImage.Source.ToString().Replace("file:///", ""), out qpath);
+                    var d = decksCBox.SelectedItem as Deck;
+                    var nc = new Card { Question = qstnBox.Text, Answer = answrBox.Text, DeckID = d.ID, ASource = apath, QSource = qpath };
+                    Factory.Default.GetCardsRepository().Add(nc);
+                    DialogResult = true;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
             }
         }
 
@@ -73,12 +80,19 @@ namespace MemoBoost.UI
 
         private void ImageButton_Click(object sender, RoutedEventArgs e)
         {
-            var path = qstnImage.Source;
-            var b = (Button)sender;
-            if ((string)b.Tag == "q")
-                qstnImage.Source = null;
-            else
-                answrImage.Source = null;
+            try
+            {
+                var path = qstnImage.Source;
+                var b = (Button)sender;
+                if ((string)b.Tag == "q")
+                    qstnImage.Source = null;
+                else
+                    answrImage.Source = null;
+            }
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
+            }
         }
     }
 }

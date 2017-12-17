@@ -31,19 +31,33 @@ namespace MemoBoost.UI
 
         private void GetUser(User user)
         {
-            _user = user;
-            DataContext= _user;//if it is two way it is supposed to change the instance as well
+            try
+            {
+                _user = user;
+                DataContext = _user;
+            }
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
+            }
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!Factory.Default.GetUsersRepository().Items.Any(u => u.Name.ToLower() == nameBox.Text.ToLower()))
+            try
             {
-                Factory.Default.GetUsersRepository().ChangeItem(_user);
-                DialogResult = true;
+                if (!Factory.Default.GetUsersRepository().Items.Any(u => u.Name.ToLower() == nameBox.Text.ToLower()))
+                {
+                    Factory.Default.GetUsersRepository().ChangeItem(_user);
+                    DialogResult = true;
+                }
+                else
+                    MessageBox.Show("A user with this name already exists.");
             }
-            else
-                MessageBox.Show("A user with this name already exists.");
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
+            }
         }
     }
 }

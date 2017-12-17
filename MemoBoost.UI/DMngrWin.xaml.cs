@@ -55,10 +55,17 @@ namespace MemoBoost.UI
         }
 
         private void GetDeck(Deck deck)
-        { 
-            _thedeck = deck;
-            deckBox.Text = deck.Name;
-            Update();
+        {
+            try
+            {
+                _thedeck = deck;
+                deckBox.Text = deck.Name;
+                Update();
+            }
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
+            }
         }
 
         private void Update()
@@ -71,26 +78,40 @@ namespace MemoBoost.UI
 
         private void DelButton_Click(object sender, RoutedEventArgs e)
         {
-            var c = cardsListBox.SelectedItem as Card;
-            if(c!=null)
-           {
-                Factory.Default.GetCardsRepository().Delete(c);
-                Update();
+            try
+            {
+                var c = cardsListBox.SelectedItem as Card;
+                if (c != null)
+                {
+                    Factory.Default.GetCardsRepository().Delete(c);
+                    Update();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
             }
         }
 
         private void CardsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ToPartlyIntialState();
-            _currentCard = (Card)cardsListBox.SelectedItem;
-            if (_currentCard != null)
+            try
             {
-                changeButton.IsEnabled = true;
-                if(_currentCard.ASource!=null)
-                    raImageButton.Visibility = Visibility.Visible;
-                if(_currentCard.QSource!=null)
-                    rqImageButton.Visibility = Visibility.Visible;
-                DataContext = _currentCard;
+                ToPartlyIntialState();
+                _currentCard = (Card)cardsListBox.SelectedItem;
+                if (_currentCard != null)
+                {
+                    changeButton.IsEnabled = true;
+                    if (_currentCard.ASource != null)
+                        raImageButton.Visibility = Visibility.Visible;
+                    if (_currentCard.QSource != null)
+                        rqImageButton.Visibility = Visibility.Visible;
+                    DataContext = _currentCard;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not perfomed.");
             }
                 
         }
@@ -148,34 +169,48 @@ namespace MemoBoost.UI
 
         private void RemoveImageButton_Click(object sender, RoutedEventArgs e)
         {
-            string path = "";
-            var b = (Button)sender;
-            if((string)b.Tag=="q")
+            try
             {
-                path = _currentCard.QSource;
-                _currentCard.PQSource = null;
-                rqImageButton.Visibility = Visibility.Hidden;
-                Factory.Default.GetCardsRepository().ChangeItem(_currentCard);
-                qstnImage.Source = null;
+                string path = "";
+                var b = (Button)sender;
+                if ((string)b.Tag == "q")
+                {
+                    path = _currentCard.QSource;
+                    _currentCard.PQSource = null;
+                    rqImageButton.Visibility = Visibility.Hidden;
+                    Factory.Default.GetCardsRepository().ChangeItem(_currentCard);
+                    qstnImage.Source = null;
+                }
+                else
+                {
+                    path = _currentCard.ASource;
+                    _currentCard.PASource = null;
+                    raImageButton.Visibility = Visibility.Hidden;
+                    Factory.Default.GetCardsRepository().ChangeItem(_currentCard);
+                    answrImage.Source = null;
+                }
+                Factory.Default.GetMediaManager().ToBeDisposed(path);
             }
-            else
+            catch
             {
-                path = _currentCard.ASource;
-                _currentCard.PASource = null;
-                raImageButton.Visibility = Visibility.Hidden;
-                Factory.Default.GetCardsRepository().ChangeItem(_currentCard);
-                answrImage.Source = null;
+                MessageBox.Show("An error occured. Last action was not performed.");
             }
-            Factory.Default.GetMediaManager().ToBeDisposed(path);
         }
 
         private void DeckBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(deckBox.Text))
+            try
             {
-                _thedeck.Name = deckBox.Text;
-                Factory.Default.GetDecksRepository().ChangeItem(_thedeck);
-                Update();
+                if (!string.IsNullOrEmpty(deckBox.Text))
+                {
+                    _thedeck.Name = deckBox.Text;
+                    Factory.Default.GetDecksRepository().ChangeItem(_thedeck);
+                    Update();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
             }
         }
     }

@@ -31,21 +31,35 @@ namespace MemoBoost.UI
 
         private void GetUser(User user)
         {
-            _user = user;
-            DataContext = _user;
+            try
+            {
+                _user = user;
+                DataContext = _user;
+            }
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
+            }
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            if(!string.IsNullOrWhiteSpace(passwordBox.Password) && passwordBox.Password.Length<=20 && passwordBox.Password.Length>=1)
+            try
             {
-                _user.Password = Convert.ToBase64String(MD5.Create().ComputeHash(Encoding.ASCII.GetBytes(passwordBox.Password)));
-                Factory.Default.GetUsersRepository().ChangeItem(_user);
-                DialogResult = true;
+                if (!string.IsNullOrWhiteSpace(passwordBox.Password) && passwordBox.Password.Length <= 20 && passwordBox.Password.Length >= 1)
+                {
+                    _user.Password = Convert.ToBase64String(MD5.Create().ComputeHash(Encoding.ASCII.GetBytes(passwordBox.Password)));
+                    Factory.Default.GetUsersRepository().ChangeItem(_user);
+                    DialogResult = true;
+                }
+                else
+                {
+                    MessageBox.Show("Некорректная длина пароля.");
+                }
             }
-            else
+            catch
             {
-                MessageBox.Show("Некорректная длина пароля.");
+                MessageBox.Show("An error occured. Last action was not performed.");
             }
         }
     }

@@ -48,7 +48,14 @@ namespace MemoBoost.UI
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            CardsToStudy();
+            try
+            {
+                CardsToStudy();
+            }
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
+            }
         }
     }
 }

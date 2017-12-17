@@ -39,12 +39,19 @@ namespace MemoBoost.UI
 
         private void DefaultUser()
         {
-            if ((Factory.Default.GetUsersRepository().Items.Count() == 1) && (StudySession.Default.CurrentUserID==0) &&(Factory.Default.GetUsersRepository().Items.ToList()[0].Password==null))
+            try
             {
-                StudySession.Default.CurrentUserID = Factory.Default.GetUsersRepository().Items.ToList()[0].ID;
-                StartWin sw = new StartWin();
-                sw.Show();
-                this.Close();
+                if ((Factory.Default.GetUsersRepository().Items.Count() == 1) && (StudySession.Default.CurrentUserID == 0) && (Factory.Default.GetUsersRepository().Items.ToList()[0].Password == null))
+                {
+                    StudySession.Default.CurrentUserID = Factory.Default.GetUsersRepository().Items.ToList()[0].ID;
+                    StartWin sw = new StartWin();
+                    sw.Show();
+                    this.Close();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
             }
         }
 
@@ -75,31 +82,44 @@ namespace MemoBoost.UI
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            var u = (User)userListBox.SelectedItem;
-            if ((u != null & u.Password == null) || (u != null && Convert.ToBase64String(MD5.Create().ComputeHash(Encoding.ASCII.GetBytes(passwordBox.Password))) == u.Password))
+            try
             {
-                var decks = Factory.Default.GetDecksRepository().Where(d => d.Cards.Count >= 0).Where(d => d.UserID == u.ID);
-                DelRelatedDecks(decks, u);
-                u.Decks = null;
-                Factory.Default.GetUsersRepository().ChangeItem(u);
-                Factory.Default.GetUsersRepository().Delete(u);
-                Update();
-                InitialState();
+                var u = (User)userListBox.SelectedItem;
+                if ((u != null & u.Password == null) || (u != null && Convert.ToBase64String(MD5.Create().ComputeHash(Encoding.ASCII.GetBytes(passwordBox.Password))) == u.Password))
+                {
+                    var decks = Factory.Default.GetDecksRepository().Where(d => d.Cards.Count >= 0).Where(d => d.UserID == u.ID);
+                    DelRelatedDecks(decks, u);
+                    u.Decks = null;
+                    Factory.Default.GetUsersRepository().ChangeItem(u);
+                    Factory.Default.GetUsersRepository().Delete(u);
+                    Update();
+                    InitialState();
+                }
+                else
+                    MessageBox.Show("Incorrect password.");
             }
-            else
-                MessageBox.Show("Incorrect password.");
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
+            }
         }
 
         private void DelRelatedDecks(IEnumerable<Deck> decks, User u)
         {
-            foreach (var deck in decks)
+            try
             {
-                Factory.Default.GetCardsRepository().DeleteRange(Factory.Default.GetCardsRepository().Where(c => c.DeckID == deck.ID));
-                deck.Cards = null;
-                Factory.Default.GetDecksRepository().ChangeItem(deck);
-                Factory.Default.GetDecksRepository().Delete(deck);
+                foreach (var deck in decks)
+                {
+                    Factory.Default.GetCardsRepository().DeleteRange(Factory.Default.GetCardsRepository().Where(c => c.DeckID == deck.ID));
+                    deck.Cards = null;
+                    Factory.Default.GetDecksRepository().ChangeItem(deck);
+                    Factory.Default.GetDecksRepository().Delete(deck);
+                }
             }
-
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
+            }
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
@@ -153,16 +173,23 @@ namespace MemoBoost.UI
 
         private void DpasswordButton_Click(object sender, RoutedEventArgs e)
         {
-            var u = userListBox.SelectedItem as User;
-            if (u != null && Convert.ToBase64String(MD5.Create().ComputeHash(Encoding.ASCII.GetBytes(passwordBox.Password))) == u.Password)
+            try
             {
-                u.Password = null;
-                Factory.Default.GetUsersRepository().ChangeItem(u);
-                Update();
-                InitialState();
+                var u = userListBox.SelectedItem as User;
+                if (u != null && Convert.ToBase64String(MD5.Create().ComputeHash(Encoding.ASCII.GetBytes(passwordBox.Password))) == u.Password)
+                {
+                    u.Password = null;
+                    Factory.Default.GetUsersRepository().ChangeItem(u);
+                    Update();
+                    InitialState();
+                }
+                else
+                    MessageBox.Show("Incorrect password");
             }
-            else
-                MessageBox.Show("Incorrect password");
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
+            }
         }
     }
 }

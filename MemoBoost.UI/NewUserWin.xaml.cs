@@ -27,14 +27,21 @@ namespace MemoBoost.UI
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!Factory.Default.GetUsersRepository().Items.Any(u => u.Name.ToLower() == nameBox.Text.ToLower()))
+            try
             {
-                var user = new User{ Name = nameBox.Text };
-                Factory.Default.GetUsersRepository().Add(user);
-                DialogResult = true;
+                if (!Factory.Default.GetUsersRepository().Items.Any(u => u.Name.ToLower() == nameBox.Text.ToLower()))
+                {
+                    var user = new User { Name = nameBox.Text };
+                    Factory.Default.GetUsersRepository().Add(user);
+                    DialogResult = true;
+                }
+                else
+                    MessageBox.Show("A user with this name already exists.");
             }
-            else
-                MessageBox.Show("A user with this name already exists.");
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
+            }
         }
     }
 }

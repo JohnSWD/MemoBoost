@@ -27,14 +27,21 @@ namespace MemoBoost.UI
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!Factory.Default.GetDecksRepository().Items.Any(d => d.Name.ToLower() == nameBox.Text.ToLower()))
+            try
             {
-                var deck = new Deck { Name = nameBox.Text, UserID=StudySession.Default.CurrentUserID };
-                Factory.Default.GetDecksRepository().Add(deck);
-                DialogResult = true;
+                if (!Factory.Default.GetDecksRepository().Items.Any(d => d.Name.ToLower() == nameBox.Text.ToLower()))
+                {
+                    var deck = new Deck { Name = nameBox.Text, UserID = StudySession.Default.CurrentUserID };
+                    Factory.Default.GetDecksRepository().Add(deck);
+                    DialogResult = true;
+                }
+                else
+                    MessageBox.Show("A deck with this name already exists.");
             }
-            else
-                MessageBox.Show("A deck with this name already exists.");
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
+            }
         }
     }
 }

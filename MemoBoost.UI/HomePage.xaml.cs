@@ -15,8 +15,15 @@ namespace MemoBoost.UI
         IEnumerable<Deck> _decks;
         public HomePage()
         {
-            InitializeComponent();
-            Update();
+            try
+            {
+                InitializeComponent();
+                Update();
+            }
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
+            }
         }
 
         private void Update()
@@ -29,48 +36,83 @@ namespace MemoBoost.UI
 
         private void DelButton_Click(object sender, RoutedEventArgs e)
         {
-            var v = (Deck)decksListBox.SelectedItem;
-            if (v!=null)
+            try
             {
-                Factory.Default.GetCardsRepository().DeleteRange(Factory.Default.GetCardsRepository().Where(c => c.DeckID == v.ID));
-                v.Cards = null;
-                Factory.Default.GetDecksRepository().ChangeItem(v);
-                Factory.Default.GetDecksRepository().Delete(v);
-                Update();
+                var v = (Deck)decksListBox.SelectedItem;
+                if (v != null)
+                {
+                    Factory.Default.GetCardsRepository().DeleteRange(Factory.Default.GetCardsRepository().Where(c => c.DeckID == v.ID));
+                    v.Cards = null;
+                    Factory.Default.GetDecksRepository().ChangeItem(v);
+                    Factory.Default.GetDecksRepository().Delete(v);
+                    Update();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
             }
         }
 
         private void NCButton_Click(object sender, RoutedEventArgs e)
         {
-            NCrdWin ncw = new NCrdWin();
-            if (ncw.ShowDialog().Value)
-                Update();
+            try
+            {
+                NCrdWin ncw = new NCrdWin();
+                if (ncw.ShowDialog().Value)
+                    Update();
+            }
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
+            }
         }
 
         private void NDButton_Click(object sender, RoutedEventArgs e)
         {
-            NDckWin ndw = new NDckWin();
-            if (ndw.ShowDialog().Value)
-                Update();
+            try
+            {
+                NDckWin ndw = new NDckWin();
+                if (ndw.ShowDialog().Value)
+                    Update();
+            }
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
+            }
         }
 
         private void ManageButton_Click(object sender, RoutedEventArgs e)
         {
-            var b = (Button)sender;
-            DMngrWin dmw = new DMngrWin();
-            dmw.OnDeckReceived?.Invoke((Deck)b.Tag);
-            dmw.OnActionCompleted += Update;
-            dmw.Show();
+            try
+            {
+                var b = (Button)sender;
+                DMngrWin dmw = new DMngrWin();
+                dmw.OnDeckReceived?.Invoke((Deck)b.Tag);
+                dmw.OnActionCompleted += Update;
+                dmw.Show();
+            }
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
+            }
         }
 
         private void ToStudy_Click(object sender, RoutedEventArgs e)
         {
-            var hl = (Hyperlink)sender;
-            var d = (Deck)hl.Tag;
-            StudySession.Default.CurrentSession = d.Cards.ToList();
-            StudySession.Default.CurrentDeck = d;
-            StudyPage sp = new StudyPage();   
-            this.NavigationService.Navigate(sp);
+            try
+            {
+                var hl = (Hyperlink)sender;
+                var d = (Deck)hl.Tag;
+                StudySession.Default.CurrentSession = d.Cards.ToList();
+                StudySession.Default.CurrentDeck = d;
+                StudyPage sp = new StudyPage();
+                this.NavigationService.Navigate(sp);
+            }
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
+            }
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -81,19 +123,33 @@ namespace MemoBoost.UI
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            decksListBox.ItemsSource = _decks.Where(d => d.Name.ToLower().Contains(searchBox.Text.ToLower().Trim()));
+            try
+            {
+                decksListBox.ItemsSource = _decks.Where(d => d.Name.ToLower().Contains(searchBox.Text.ToLower().Trim()));
+            }
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
+            }
         }
 
         private void ResButton_Click(object sender, RoutedEventArgs e)
         {
-            var d = decksListBox.SelectedItem as Deck;
-            if (d != null)
+            try
             {
-                foreach (var card in d.Cards)
+                var d = decksListBox.SelectedItem as Deck;
+                if (d != null)
                 {
-                    Factory.Default.GetScheduler().Reset(card);
+                    foreach (var card in d.Cards)
+                    {
+                        Factory.Default.GetScheduler().Reset(card);
+                    }
+                    Update();
                 }
-                Update();
+            }
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
             }
         }
     }

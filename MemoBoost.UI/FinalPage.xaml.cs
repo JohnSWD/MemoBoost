@@ -29,10 +29,17 @@ namespace MemoBoost.UI
 
         public void Info()
         {
-            var d= StudySession.Default.CurrentDeck;
-            DataContext = d;
-            var n = d.Cards.Where(c => DateTime.Compare(c.Next, DateTime.Now.AddDays(1).Date) <0).Count();
-            infoBlock.Text = $"{n} card(s) will become available for study today.";
+            try
+            {
+                var d = StudySession.Default.CurrentDeck;
+                DataContext = d;
+                var n = d.Cards.Where(c => DateTime.Compare(c.Next, DateTime.Now.AddDays(1).Date) < 0).Count();
+                infoBlock.Text = $"{n} card(s) will become available for study today.";
+            }
+            catch
+            {
+                MessageBox.Show("An error occured. Last action was not performed.");
+            }
         }
     }
 }
