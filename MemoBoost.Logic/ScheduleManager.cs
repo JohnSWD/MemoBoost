@@ -39,6 +39,7 @@ namespace MemoBoost.Logic
                 card.EF = CalculateEF(card.EF, q);
                 card.Interval = CalculateInterval(card.EF, card.Interval, skipped, q);
                 card.Next = DateTime.Now.AddDays(card.Interval);
+                StudySession.Default.SaveInfo(2);
             }
             Factory.Default.GetCardsRepository().ChangeItem(card);
         }
@@ -51,6 +52,7 @@ namespace MemoBoost.Logic
                 card.Steps = 2;
                 card.State = 2;
                 card.Next = DateTime.Now.AddDays(4);
+                StudySession.Default.SaveInfo(1);
             }
             else if (q == 3)
             {
@@ -59,6 +61,7 @@ namespace MemoBoost.Logic
                 {
                     card.State = 2;
                     card.Next = DateTime.Now.AddDays(1);
+                    StudySession.Default.SaveInfo(1);
                 }
                 else
                     card.Next = DateTime.Now.AddMinutes(10);

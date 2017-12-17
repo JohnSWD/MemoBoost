@@ -12,6 +12,7 @@ namespace MemoBoost.Logic
         public DbSet<Card> Cards { get; set; }
         public DbSet<Deck> Decks { get; set; }
         public DbSet<User> User{ get; set; }
+        public DbSet<Statisticks> Statisticks { get; set; }
 
         public Context() : base("MBDB")
         {

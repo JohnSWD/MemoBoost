@@ -42,5 +42,35 @@ namespace MemoBoost.Logic
                 return new List<Card>();
         }
 
+        public void SaveInfo(int state) //state: 1-study, 2-review
+        {
+            var i = Factory.Default.GetStsRepository().Items.FirstOrDefault(s => s.Date.ToShortDateString() == DateTime.Now.ToShortDateString() && s.UserID==CurrentUserID);
+            if (i != null && state == 1)
+            {
+                i.Studied += 1;
+                Factory.Default.GetStsRepository().ChangeItem(i);
+            }
+            else if (i != null && state == 2)
+            {
+                i.Reviewed += 1;
+                Factory.Default.GetStsRepository().ChangeItem(i);
+            }
+            else
+            {
+                if (state == 1)
+                {
+                    var s = new Statisticks { Date = DateTime.Now, Studied = 1, UserID=CurrentUserID};
+                    Factory.Default.GetStsRepository().Add(s);
+                }
+                else
+                {
+                    var s = new Statisticks { Date = DateTime.Now, Reviewed = 1, UserID=CurrentUserID};
+                    Factory.Default.GetStsRepository().Add(s);
+                }
+            }
+
+
+        }
+
     }
 }

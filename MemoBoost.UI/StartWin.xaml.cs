@@ -41,5 +41,11 @@ namespace MemoBoost.UI
             uw.Show();
             this.Close();
         }
+
+        private void Opstat_Click(object sender, RoutedEventArgs e)
+        {
+            StatisticksWin sw = new StatisticksWin();
+            sw.Show();
+        }
     }
 }

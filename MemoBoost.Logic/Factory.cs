@@ -12,6 +12,7 @@ namespace MemoBoost.Logic
         private IRepository<Card> _cardsrep = new CardsRepository();
         private IRepository<Deck> _decksrep = new DecksRepository();
         private IRepository<User> _usersrep = new UsersRepository();
+        private IRepository<Statisticks> _strep = new StatisticksRepository();
         private IScheduleManager _scheduleManager = new ScheduleManager();
         private IMediaManager _mediaManager = new MediaManager();
 
@@ -25,6 +26,11 @@ namespace MemoBoost.Logic
                 }
                 return _default;
             }
+        }
+
+        public IRepository<Statisticks> GetStsRepository()
+        {
+            return _strep;
         }
 
         public IRepository<Card> GetCardsRepository()
