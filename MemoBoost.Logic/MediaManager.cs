@@ -39,10 +39,29 @@ namespace MemoBoost.Logic
             return modified;
         }
 
-        public void Remove(string path)//exception
+        public void ToBeDisposed(string path)
         {
-            string fpath= Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Media");
-            File.Delete(Path.Combine(fpath, Path.GetFileName(path)));
+            using (TextWriter tw = new StreamWriter("ToBeDisposed.txt", true))
+            {
+                tw.WriteLine(path);
+            }
+        }
+
+        public void Remove()
+        {
+            string fpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Media");
+            if (File.Exists("ToBeDisposed.txt"))
+            {
+                using (var sr = new StreamReader("ToBeDisposed.txt"))
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        string str = sr.ReadLine();
+                        File.Delete(Path.Combine(fpath, Path.GetFileName(str)));
+                    }
+                }
+            }
+            File.Delete("ToBeDisposed.txt");
         }
     }
 }

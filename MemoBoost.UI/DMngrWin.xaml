@@ -28,7 +28,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <TextBlock Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Text="Deck name: " ></TextBlock>
-        <TextBox Focusable="False" Text="{Binding Path=Deck.Name, Mode=OneWay}" Name ="deckBox" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Center"></TextBox>
+        <TextBox Name ="deckBox" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5" LostFocus="DeckBox_LostFocus" VerticalAlignment="Center"></TextBox>
         <StackPanel Grid.Column="1" Margin="5 5 0 5" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top">
             <TextBlock  Text="Question: " HorizontalAlignment="Right"></TextBlock>
             <Button Tag="q" Margin="0 5 0 0" Name="rqImageButton" Visibility="Hidden" Click="RemoveImageButton_Click">

@@ -57,6 +57,7 @@ namespace MemoBoost.UI
         private void GetDeck(Deck deck)
         { 
             _thedeck = deck;
+            deckBox.Text = deck.Name;
             Update();
         }
 
@@ -152,20 +153,30 @@ namespace MemoBoost.UI
             if((string)b.Tag=="q")
             {
                 path = _currentCard.QSource;
-                qstnImage.Source = null;
-                _currentCard.QSource = null;
+                _currentCard.PQSource = null;
                 rqImageButton.Visibility = Visibility.Hidden;
                 Factory.Default.GetCardsRepository().ChangeItem(_currentCard);
+                qstnImage.Source = null;
             }
             else
             {
                 path = _currentCard.ASource;
-                answrImage.Source = null;
-                _currentCard.ASource = null;
+                _currentCard.PASource = null;
                 raImageButton.Visibility = Visibility.Hidden;
                 Factory.Default.GetCardsRepository().ChangeItem(_currentCard);
+                answrImage.Source = null;
             }
-            Factory.Default.GetMediaManager().Remove(path);//doesnt work
+            Factory.Default.GetMediaManager().ToBeDisposed(path);
+        }
+
+        private void DeckBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(deckBox.Text))
+            {
+                _thedeck.Name = deckBox.Text;
+                Factory.Default.GetDecksRepository().ChangeItem(_thedeck);
+                Update();
+            }
         }
     }
 }

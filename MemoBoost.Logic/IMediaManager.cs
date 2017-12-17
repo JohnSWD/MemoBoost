@@ -9,6 +9,7 @@ namespace MemoBoost.Logic
     public interface IMediaManager
     {
         void Copy(string file, out string filePath);
-        void Remove(string path);
+        void Remove();
+        void ToBeDisposed(string path);
     }
 }

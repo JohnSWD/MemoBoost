@@ -20,7 +20,8 @@
             <Button Name="addButton" Content="Add" Margin="0 0 0 8" HorizontalAlignment="Right" Width="105" Click="AddButton_Click"/>
             <Button Name="renameButton" Content="Rename" Margin="0 0 0 8" Click="RenameButton_Click"/>
             <Button Name="deleteButton" Content="Delete" Margin="0 0 0 8" Click="DeleteButton_Click"/>
-            <Button Name="passwordButton" Content="Add password" Margin="0 0 0 24" Click="PasswordButton_Click"/>
+            <Button Name="passwordButton" Content="Add password" Margin="0 0 0 8" Click="PasswordButton_Click"/>
+            <Button Visibility="Hidden" Name="dpasswordButton" Content="Delete password" Margin="0 0 0 24" Click="DpasswordButton_Click"/>
             <Button Name="okButton" Content="Ok" Click="OkButton_Click"/>
         </StackPanel>
         <ListBox Name="userListBox" Margin="10" SelectionChanged="UserListBox_SelectionChanged" >

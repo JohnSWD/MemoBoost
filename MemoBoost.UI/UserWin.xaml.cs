@@ -24,13 +24,22 @@ namespace MemoBoost.UI
         public UserWin()
         {
             InitializeComponent();
+            Factory.Default.GetMediaManager().Remove();
             DefaultUser();
             Update();
         }
 
-        public void DefaultUser()
+        private void InitialState()
         {
-            if ((Factory.Default.GetUsersRepository().Items.Count() == 1) && (StudySession.Default.CurrentUserID==0))
+            passwordPanel.Visibility = Visibility.Hidden;
+            passwordButton.Visibility = Visibility.Visible;
+            dpasswordButton.Visibility = Visibility.Hidden;
+            passwordBox.Clear();
+        }
+
+        private void DefaultUser()
+        {
+            if ((Factory.Default.GetUsersRepository().Items.Count() == 1) && (StudySession.Default.CurrentUserID==0) &&(Factory.Default.GetUsersRepository().Items.ToList()[0].Password==null))
             {
                 StudySession.Default.CurrentUserID = Factory.Default.GetUsersRepository().Items.ToList()[0].ID;
                 StartWin sw = new StartWin();
@@ -67,15 +76,18 @@ namespace MemoBoost.UI
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             var u = (User)userListBox.SelectedItem;
-            if(u!=null)
+            if ((u != null & u.Password == null) || (u != null && Convert.ToBase64String(MD5.Create().ComputeHash(Encoding.ASCII.GetBytes(passwordBox.Password))) == u.Password))
             {
-                var decks = Factory.Default.GetDecksRepository().Where(d=>d.Cards.Count>=0).Where(d => d.UserID == u.ID);
+                var decks = Factory.Default.GetDecksRepository().Where(d => d.Cards.Count >= 0).Where(d => d.UserID == u.ID);
                 DelRelatedDecks(decks, u);
                 u.Decks = null;
-                Factory.Default.GetUsersRepository().ChangeItem(u); 
+                Factory.Default.GetUsersRepository().ChangeItem(u);
                 Factory.Default.GetUsersRepository().Delete(u);
                 Update();
+                InitialState();
             }
+            else
+                MessageBox.Show("Incorrect password.");
         }
 
         private void DelRelatedDecks(IEnumerable<Deck> decks, User u)
@@ -92,17 +104,22 @@ namespace MemoBoost.UI
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            var u = (User)userListBox.SelectedItem;
-            if ((u != null && u.Password==null) || (Convert.ToBase64String(MD5.Create().ComputeHash(Encoding.ASCII.GetBytes(passwordBox.Password))) == u.Password))
+            try
             {
-                StudySession.Default.CurrentUserID = u.ID;
-                StartWin sw = new StartWin();
-                sw.Show();
-                this.Close();
-            }
-            else
+                var u = (User)userListBox.SelectedItem;
+                if ((u != null && u.Password == null) || (Convert.ToBase64String(MD5.Create().ComputeHash(Encoding.ASCII.GetBytes(passwordBox.Password))) == u.Password))
+                {
+                    StudySession.Default.CurrentUserID = u.ID;
+                    StartWin sw = new StartWin();
+                    sw.Show();
+                    this.Close();
+                }
+                else
+                    MessageBox.Show("Incorrect password.");
+                }
+            catch
             {
-                MessageBox.Show("Некорректные пароль.");
+                MessageBox.Show("Profile was not selected.");
             }
         }
 
@@ -127,8 +144,25 @@ namespace MemoBoost.UI
                 {
                     passwordPanel.Visibility = Visibility.Visible;
                     passwordButton.Visibility = Visibility.Hidden;
+                    dpasswordButton.Visibility = Visibility.Visible;
                 }
+                else
+                    InitialState();   
             }
+        }
+
+        private void DpasswordButton_Click(object sender, RoutedEventArgs e)
+        {
+            var u = userListBox.SelectedItem as User;
+            if (u != null && Convert.ToBase64String(MD5.Create().ComputeHash(Encoding.ASCII.GetBytes(passwordBox.Password))) == u.Password)
+            {
+                u.Password = null;
+                Factory.Default.GetUsersRepository().ChangeItem(u);
+                Update();
+                InitialState();
+            }
+            else
+                MessageBox.Show("Incorrect password");
         }
     }
 }
